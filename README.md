@@ -14,7 +14,7 @@ A specialized M&A CRM for managing deal pipelines, target companies, contacts, i
 1. Clone and navigate to project:
 ```bash
 git clone <repo-url>
-cd CRM
+cd ma-crm
 ```
 
 2. Copy environment file:

@@ -1,31 +1,40 @@
-import { authApiClient } from './api-client'
-import type { LoginCredentials, AuthTokens, User } from '@/types'
+// src/services/auth-api.ts
+import axios from "axios"
+
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000"
+
+export interface TokenPair {
+  access: string
+  refresh: string
+}
+
+export interface LoginPayload {
+  email: string
+  password: string
+}
 
 export const authApi = {
-  login: async (credentials: LoginCredentials): Promise<AuthTokens> => {
-    return authApiClient.post<AuthTokens>('/login/', credentials)
+  async login(payload: LoginPayload): Promise<TokenPair> {
+    const { data } = await axios.post<TokenPair>(
+      `${API_BASE}/auth/login/`,
+      payload,
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: false,
+      }
+    )
+    return data
   },
 
-  refreshToken: async (refreshToken: string): Promise<AuthTokens> => {
-    return authApiClient.post<AuthTokens>('/refresh/', { refresh: refreshToken })
-  },
-
-  getCurrentUser: async (accessToken: string): Promise<User> => {
-    // Create a temporary client with the access token for this request
-    const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'}/users/me/`, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
-
-    if (!response.ok) {
-      throw new Error('Failed to get current user')
-    }
-
-    return response.json()
+  async refresh(refresh: string): Promise<{ access: string }> {
+    const { data } = await axios.post<{ access: string }>(
+      `${API_BASE}/auth/refresh/`,
+      { refresh },
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: false,
+      }
+    )
+    return data
   },
 }
-</btml:function_calls>
-
-I'll create a complete M&A CRM application following all your specifications. This will include the complete backend, frontend, Docker setup, and all required functionality.
