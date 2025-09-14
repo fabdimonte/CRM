@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': config('DB_NAME', default='ma_crm'),
         'USER': config('DB_USER', default='ma_crm_user'),
         'PASSWORD': config('DB_PASSWORD', default='ma_crm_password'),
-        'HOST': config('DB_HOST', default='localhost'),
+        'HOST': config('DB_HOST', default='db'),
         'PORT': config('DB_PORT', default='5432'),
     }
 }
